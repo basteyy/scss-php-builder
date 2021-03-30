@@ -1,0 +1,20 @@
+{
+    "name": "basteyy/scss-php-builder",
+    "description": "A ready to go server side scss builder.",
+    "type": "library",
+    "require": {
+        "scssphp/scssphp": "^1.4.1"
+    },
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "basteyy",
+            "email": "b@steyy.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "basteyy\\ScssPhpBuilder\\": "src"
+        }
+    }
+}
