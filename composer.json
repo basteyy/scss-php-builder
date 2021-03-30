@@ -5,7 +5,7 @@
     "require": {
         "scssphp/scssphp": "^1.4.1"
     },
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "basteyy",
