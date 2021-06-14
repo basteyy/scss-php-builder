@@ -67,6 +67,8 @@ $scss->setSourcemapFolderUrl('/css/');
 // Than compile the scss source
 $scss->compileToOutputfile();
  ```
+ 
+ Keep in mind, that you can the option, which is passed to the __construct will overwrite/control the sourcemap settings (see [__construct Options](#__construct Options))
 
 
 ### Force recompile
@@ -83,6 +85,22 @@ $scss->getCompiledCode();
 ```php
 $scss->getCompiledCode(true);
  ```
+ 
+### __construct Options
+
+You can pass a few options to the __construct:
+```php
+// Construct the class
+$scss = new \basteyy\ScssPhpBuilder\ScssPhpBuilder([
+	'auto_create_folders' => true, 
+	'auto_create_files' => true, 
+	'write_source_map' => true
+]);
+```
+
+_auto_create_folders_ if true, will create all folders
+_auto_create_files_ if true, will create all foles
+_write_source_map_ if true, will create the source map
 
 ## License
 

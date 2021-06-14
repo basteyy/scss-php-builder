@@ -17,8 +17,11 @@ class ScssPhpBuilder
     private string $sourcemapUrl;
     private bool $expandedOutput = false;
 
-    public function __construct()
+    public function __construct(array $options = ['auto_create_folders' => true, 'auto_create_files' => true, 'write_source_map' => true])
     {
+        $this->auto_create_folders = $options['auto_create_folders'] ?? false;
+        $this->auto_create_files = $options['auto_create_files'] ?? false;
+        $this->write_source_map = $options['write_source_map'] ?? false;
     }
 
     /**
@@ -29,6 +32,10 @@ class ScssPhpBuilder
      */
     public function addFolder(string $folder): void
     {
+        if (!is_dir($folder) && $this->auto_create_folders ) {
+            mkdir($folder);
+        }
+
         if (!is_dir($folder)) {
             throw new Exception(sprintf('Given parameter %s is not a valid folder!', $folder));
         }
@@ -44,6 +51,10 @@ class ScssPhpBuilder
      */
     public function addOutputeFile(string $filepath): void
     {
+        if (!is_dir(dirname($filepath)) && $this->auto_create_folders ) {
+            mkdir(dirname($filepath));
+        }
+
         if (!is_dir(dirname($filepath))) {
             throw new Exception(sprintf('Given parameter %s is not a valid folder for the outpute file! Make sure you create the parent folder before using this class.',
                 dirname($filepath)));
@@ -60,6 +71,10 @@ class ScssPhpBuilder
      */
     public function addStartingFile(string $filepath): void
     {
+        if (!file_exists($filepath) && $this->auto_create_files) {
+            file_put_contents($filepath, '/* Nothing here yet */');
+        }
+
         if (!file_exists($filepath)) {
             throw new Exception(sprintf('SCSS-Stragint File %s not exists.', $filepath));
         }
@@ -122,10 +137,13 @@ class ScssPhpBuilder
         if (isset($this->sourcemapUrl)) {
             $compiler->setSourceMap(Compiler::SOURCE_MAP_FILE);
             $sourcemapBasename = basename($this->outputFile) . '.map';
-            $compiler->setSourceMapOptions([
-                'sourceMapWriteTo' => dirname($this->outputFile) . DIRECTORY_SEPARATOR . $sourcemapBasename,
-                'sourceMapURL'     => $this->sourcemapUrl . $sourcemapBasename
-            ]);
+
+            if ($this->write_source_map) {
+                $compiler->setSourceMapOptions([
+                    'sourceMapWriteTo' => dirname($this->outputFile) . DIRECTORY_SEPARATOR . $sourcemapBasename,
+                    'sourceMapURL'     => $this->sourcemapUrl . $sourcemapBasename
+                ]);
+            }
         }
         foreach ($this->folders as $folder) {
             $compiler->addImportPath($folder);
