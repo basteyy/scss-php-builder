@@ -68,7 +68,7 @@ $scss->setSourcemapFolderUrl('/css/');
 $scss->compileToOutputfile();
  ```
  
- Keep in mind, that you can the option, which is passed to the __construct will overwrite/control the sourcemap settings (see [__construct Options](#__construct Options))
+ Keep in mind, that you can the option, which is passed to the __construct will overwrite/control the sourcemap settings (see [__construct Options](https://github.com/basteyy/scss-php-builder#__construct-options))
 
 
 ### Force recompile
