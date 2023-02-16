@@ -1,6 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
+/**
+ * ScssPhpBuilder helps you to compile your scss sources to css.
+ *
+ * @see https://github.com/basteyy/scss-php-builder/
+ * @author basteyy
+ */
 
 namespace basteyy\ScssPhpBuilder;
 
@@ -11,12 +16,26 @@ use ScssPhp\ScssPhp\OutputStyle;
 
 class ScssPhpBuilder
 {
+    /** @var string */
     private string $outputFile;
+    /** @var array */
     private array $folders;
+    /** @var string */
     private string $startingPoint;
+    /** @var string */
     private string $sourcemapUrl;
+    /** @var bool */
     private bool $expandedOutput = false;
+    /** @var bool */
+    private bool $auto_create_folders;
+    /** @var bool */
+    private bool $auto_create_files;
+    /** @var bool */
+    private bool $write_source_map;
 
+    /**
+     * @param array $options<auto_create_folders,auto_create_files,write_source_map>
+     */
     public function __construct(array $options = ['auto_create_folders' => true, 'auto_create_files' => true, 'write_source_map' => true])
     {
         $this->auto_create_folders = $options['auto_create_folders'] ?? false;
